@@ -95,17 +95,36 @@
 
 7. **设置远程访问**（可选）：默认情况下，MariaDB 只允许本地连接。如果需要远程访问，请执行以下步骤：
 
+   7.1.
+
    - 使用 root 用户登录到 MariaDB。
    - 执行以下命令以允许远程访问：
 
      ```sql
-     GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY 'your_password' WITH GRANT OPTION;
+     CREATE USER 'your_username'@'%' IDENTIFIED BY 'your_password';
+     GRANT ALL PRIVILEGES ON *.* TO 'your_username'@'%' WITH GRANT OPTION;
      FLUSH PRIVILEGES;
      ```
+  
+     **sql讲解：**  
+   
+     `CREATE USER 'your_username'@'%' IDENTIFIED BY 'your_password';`
 
-     将 `'your_password'` 替换为您希望使用的密码。注意，这会在安全性上有所降低，请谨慎使用。
+     创建了一个新用户，该用户可以从任何主机（`'%'`）连接到 MySQL 服务器，并使用指定的密码进行身份验证。
 
-8. **防火墙配置**（可选）：如果您启用了防火墙（例如 UFW），请确保允许 MariaDB 的通信。您可以运行以下命令允许 MariaDB 流量：
+     `GRANT ALL PRIVILEGES ON *.* TO 'your_username'@'%' WITH GRANT OPTION;`
+
+     授予了该用户在所有数据库和所有表上的所有权限，并且还赋予了该用户将这些权限授予其他用户的权限（`WITH GRANT OPTION`）。
+
+     这两个命令通常一起使用，目的是创建一个具有管理权限的用户，该用户可以从远程主机连接到 MySQL 服务器，并且可以授予其他用户权限。请注意，为了安全起见，应该仔细限制授予的权限，以确保不会授予不必要的权限给用户。
+
+   7.2
+   
+   编辑/etc/mysql/mariadb.conf.d/50-server.cnf文件中bind-address = 0.0.0.0
+
+   这一行指定了 MySQL 服务器绑定的 IP 地址。在这里，0.0.0.0 表示 MySQL 将在所有可用的网络接口上监听连接。这意味着 MySQL 将接受来自任何 IP 地址的连接请求。如果你希望 MySQL 服务器只接受特定 IP 地址的连接请求，可以将 bind-address 设置为该 IP 地址。
+     
+9. **防火墙配置**（可选）：如果您启用了防火墙（例如 UFW），请确保允许 MariaDB 的通信。您可以运行以下命令允许 MariaDB 流量：
 
    ```bash
    sudo ufw allow mysql
@@ -118,51 +137,3 @@
 **补充**
 
 如果需要远程登录（例如：Navicat)需要开启服务器的TCP协议3306端口
-
----
-
-**常见问题**
-
-问题：
-root@dd0036:~# sudo mysql -u root -p
-Enter password: 
-ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
-
-解决：
-这个错误通常表示 MySQL 拒绝了使用给定密码登录的尝试。有几种方法可以解决这个问题：
-
-1. **确认密码正确性：** 确保你输入的密码是正确的，注意 MySQL 密码区分大小写。
-
-2. **重置 root 密码：** 如果你忘记了 root 用户的密码，可以尝试重置密码。首先，停止 MySQL 服务：
-
-   ```bash
-   sudo systemctl stop mysql
-   ```
-
-   然后以跳过授权表的方式启动 MySQL：
-
-   ```bash
-   sudo mysqld_safe --skip-grant-tables &
-   ```
-
-   连接到 MySQL：
-
-   ```bash
-   mysql -u root
-   ```
-
-   然后在 MySQL 中执行以下命令来重置 root 密码：
-
-   ```sql
-   USE mysql;
-   UPDATE user SET authentication_string=PASSWORD('new_password') WHERE User='root';
-   FLUSH PRIVILEGES;
-   ```
-
-   替换 `new_password` 为你要设置的新密码。重置密码后，退出 MySQL 并重启 MySQL 服务：
-
-   ```bash
-   sudo systemctl restart mysql
-   ```
-
-3. **检查是否有其他问题：** 如果以上方法都无法解决问题，请检查系统和 MySQL 的日志文件，查看是否有其他错误信息。
