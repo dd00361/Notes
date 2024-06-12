@@ -46,7 +46,6 @@ sudo rm /etc/systemd/system/httpd.service
 更新系统的软件包信息并重启系统以确保所有更改生效：
 
 ```bash
-sudo yum update
 sudo reboot
 ```
 
