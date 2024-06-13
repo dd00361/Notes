@@ -208,3 +208,106 @@
    ```
    
    然后，在浏览器中访问 `http://your_server_ip/index.php`，您应该会看到一个显示 PHP 配置信息的页面。如果看到了这个页面，说明 PHP 已成功安装并配置。
+
+   ---
+
+   ### 注意事项：项目中需要确认runtime文件夹的存在
+
+   ---
+   
+   ### 常见问题
+
+      在 HTML 页面中引用 CSS 文件出现 404 错误，通常是因为服务器找不到该文件。在基于 Ubuntu、Apache、MySQL 和 ThinkPHP 5.1 的环境中，可以按以下步骤来解决这个问题：
+   
+      #### 1. 检查文件路径
+      
+      确保文件 `/static/css/GoogleFont.css` 实际存在于项目目录中。检查路径是否正确，文件名是否拼写错误。
+      
+      #### 2. 检查项目目录结构
+      
+      确保静态文件目录结构正确，并且 Apache 可以访问该目录。假设项目目录结构如下：
+      
+      ```
+      /path/to/your/project/
+      ├── public/
+      │   ├── index.php
+      │   └── static/
+      │       └── css/
+      │           └── GoogleFont.css
+      ```
+      
+      在这种情况下， `DocumentRoot` 应该指向 `public` 目录。
+      
+      #### 3. 检查 Apache 配置
+      
+      确保 Apache 配置中的 `DocumentRoot` 指向项目的 `public` 目录。编辑 Apache 配置文件（例如 `/etc/apache2/sites-available/000-default.conf`）：
+      
+      ```apache
+      <VirtualHost *:80>
+          ServerAdmin webmaster@localhost
+          DocumentRoot /path/to/your/project/public
+      
+          <Directory /path/to/your/project/public>
+              Options Indexes FollowSymLinks
+              AllowOverride All
+              Require all granted
+          </Directory>
+      
+          ErrorLog ${APACHE_LOG_DIR}/error.log
+          CustomLog ${APACHE_LOG_DIR}/access.log combined
+      </VirtualHost>
+      ```
+      
+      #### 4. 启用 `mod_rewrite`
+      
+      确保已启用 Apache 的 `mod_rewrite` 模块，并允许 `.htaccess` 文件生效：
+      
+      ```bash
+      sudo a2enmod rewrite
+      sudo systemctl restart apache2
+      ```
+      
+      确保 `.htaccess` 文件在 `public` 目录中，并包含适当的重写规则。例如：
+      
+      ```apache
+      <IfModule mod_rewrite.c>
+          Options +FollowSymlinks -Multiviews
+          RewriteEngine on
+      
+          # 静态资源重写规则
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteRule ^(.*)$ index.php/$1 [L]
+      </IfModule>
+      ```
+      
+      #### 5. 检查权限
+      
+      确保静态文件和目录对 Apache 用户具有读取权限。运行以下命令：
+      
+      ```bash
+      sudo chown -R www-data:www-data /path/to/your/project
+      sudo chmod -R 755 /path/to/your/project
+      ```
+      
+      #### 6. 清理浏览器缓存
+      
+      有时，浏览器可能会缓存旧的请求结果。尝试清理浏览器缓存，或者在新的隐私窗口中重新加载页面。
+      
+      #### 7. 重启 Apache 服务器
+      
+      在做了以上修改后，务必重启 Apache 服务器使更改生效：
+      
+      ```bash
+      sudo systemctl restart apache2
+      ```
+      
+      #### 8. 查看 Apache 错误日志
+      
+      如果问题仍然存在，可以查看 Apache 错误日志，以获取更多详细信息：
+      
+      ```bash
+      sudo tail -n 50 /var/log/apache2/error.log
+      ```
+      
+      通过上述步骤，您应该能够解决在 HTML 页面中引用 CSS 文件出现 404 错误的问题。
