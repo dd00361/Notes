@@ -1,30 +1,30 @@
-# 安装 Apache HTTP 服务器（简称 Apache）。以下是详细的安装步骤：
+### 安装 Apache HTTP 服务器（简称 Apache）。以下是详细的安装步骤：
 
-1. ## 更新软件包索引：首先，确保您的系统上的软件包索引是最新的。打开终端（快捷键：Ctrl+Alt+T）并运行以下命令：
+1. #### 更新软件包索引：首先，确保您的系统上的软件包索引是最新的。打开终端（快捷键：Ctrl+Alt+T）并运行以下命令：
 
    ```bash
    sudo apt update
    ```
 
-2. ## 安装 Apache：安装 Apache 的方式是使用 apt 包管理器。在终端中运行以下命令安装 Apache：
+2. #### 安装 Apache：安装 Apache 的方式是使用 apt 包管理器。在终端中运行以下命令安装 Apache：
 
    ```bash
    sudo apt install apache2
    ```
 
-3. ## 启动 Apache：安装完成后，Apache 不会自动启动。您可以使用以下命令手动启动 Apache 服务：
+3. #### 启动 Apache：安装完成后，Apache 不会自动启动。您可以使用以下命令手动启动 Apache 服务：
 
    ```bash
    sudo systemctl start apache2
    ```
 
-4. ## 设置 Apache 开机自启动：如果您希望 Apache 在系统启动时自动启动，请运行以下命令：
+4. #### 设置 Apache 开机自启动：如果您希望 Apache 在系统启动时自动启动，请运行以下命令：
 
    ```bash
    sudo systemctl enable apache2
    ```
 
-5. ## 检查 Apache 状态：您可以使用以下命令检查 Apache 服务器是否正在运行：
+5. #### 检查 Apache 状态：您可以使用以下命令检查 Apache 服务器是否正在运行：
 
    ```bash
    sudo systemctl status apache2
@@ -39,19 +39,19 @@
       ...
    ```
 
-6. ## 设置防火墙规则（可选）：如果您启用了防火墙（例如 UFW），则需要允许 HTTP 和 HTTPS 通信。运行以下命令允许 HTTP 和 HTTPS 流量：
+6. #### 设置防火墙规则（可选）：如果您启用了防火墙（例如 UFW），则需要允许 HTTP 和 HTTPS 通信。运行以下命令允许 HTTP 和 HTTPS 流量：
 
    ```bash
    sudo ufw allow 'Apache'
    ```
 
-7. ## 测试 Apache：打开您的 Web 浏览器并访问 `http://localhost`。如果您看到 Apache2 默认页面，则表示 Apache 安装成功。
+7. #### 测试 Apache：打开您的 Web 浏览器并访问 `http://localhost`。如果您看到 Apache2 默认页面，则表示 Apache 安装成功。
 
 这样，您就成功安装并启动了 Apache 服务器。
 
 ---
 
-# 安装Mysql。以下是详细的安装步骤：
+### 安装Mysql。以下是详细的安装步骤：
 
 1. **更新软件包索引**：首先，确保您的系统上的软件包索引是最新的。打开终端（快捷键：Ctrl+Alt+T）并运行以下命令：
 
@@ -138,75 +138,73 @@
 
 ---
 
-# 安装 PHP 可以通过以下步骤完成。下面是详细的步骤：
+### 安装 PHP 可以通过以下步骤完成。下面是详细的步骤：
 
-### 步骤 1：更新软件包列表
+1. #### 更新软件包列表
 
-在安装任何新软件包之前，最好先更新现有的软件包列表。这可以通过以下命令完成：
+   在安装任何新软件包之前，最好先更新现有的软件包列表。这可以通过以下命令完成：
+   
+   ```bash
+   sudo apt update
+   ```
 
-```bash
-sudo apt update
-```
+2. #### 安装 PHP
 
-### 步骤 2：安装 PHP
+   在 Ubuntu 中，您可以使用 `apt` 包管理器来安装 PHP。默认情况下，Ubuntu 软件库中包含 PHP 7.4，这是在 Ubuntu 20.04 中的默认版本。要安装 PHP 以及一些常见的 PHP 扩展，请运行以下命令：
+   
+   ```bash
+   sudo apt install php php-cli php-fpm php-json php-common php-mysql php-zip php-gd php-mbstring php-curl php-xml php-bcmath php-json
+   ```
 
-在 Ubuntu 中，您可以使用 `apt` 包管理器来安装 PHP。默认情况下，Ubuntu 软件库中包含 PHP 7.4，这是在 Ubuntu 20.04 中的默认版本。要安装 PHP 以及一些常见的 PHP 扩展，请运行以下命令：
+3. #### 验证 PHP 安装
 
-```bash
-sudo apt install php php-cli php-fpm php-json php-common php-mysql php-zip php-gd php-mbstring php-curl php-xml php-bcmath php-json
-```
+   安装完成后，可以使用以下命令验证 PHP 是否已成功安装：
+   
+   ```bash
+   php -v
+   ```
+   
+   该命令将输出已安装的 PHP 版本及其相关信息。
 
-### 步骤 3：验证 PHP 安装
+4. #### 配置 PHP（可选）
 
-安装完成后，可以使用以下命令验证 PHP 是否已成功安装：
+   根据您的需求，您可能需要编辑 PHP 配置文件。PHP 的主配置文件是 `/etc/php/7.4/apache2/php.ini`（如果您使用的是 Apache）或 `/etc/php/7.4/fpm/php.ini`（如果您使用的是 PHP-FPM）。
+   
+   可以使用 `nano` 或任何其他文本编辑器来编辑此文件。例如：
+   
+   ```bash
+   sudo nano /etc/php/7.4/apache2/php.ini
+   ```
+   
+   或者
+   
+   ```bash
+   sudo nano /etc/php/7.4/fpm/php.ini
+   ```
 
-```bash
-php -v
-```
+5. #### 重启 Web 服务器
 
-该命令将输出已安装的 PHP 版本及其相关信息。
+   如果您使用的是 Apache 作为 Web 服务器，请重启 Apache 以使更改生效：
+   
+   ```bash
+   sudo systemctl restart apache2
+   ```
+   
+   如果您使用的是 Nginx 和 PHP-FPM，请重启 PHP-FPM 和 Nginx：
+   
+   ```bash
+   sudo systemctl restart php7.4-fpm
+   sudo systemctl restart nginx
+   ```
 
-### 步骤 4：配置 PHP（可选）
+6. #### 检查 PHP 是否工作
 
-根据您的需求，您可能需要编辑 PHP 配置文件。PHP 的主配置文件是 `/etc/php/7.4/apache2/php.ini`（如果您使用的是 Apache）或 `/etc/php/7.4/fpm/php.ini`（如果您使用的是 PHP-FPM）。
-
-可以使用 `nano` 或任何其他文本编辑器来编辑此文件。例如：
-
-```bash
-sudo nano /etc/php/7.4/apache2/php.ini
-```
-
-或者
-
-```bash
-sudo nano /etc/php/7.4/fpm/php.ini
-```
-
-### 步骤 5：重启 Web 服务器
-
-如果您使用的是 Apache 作为 Web 服务器，请重启 Apache 以使更改生效：
-
-```bash
-sudo systemctl restart apache2
-```
-
-如果您使用的是 Nginx 和 PHP-FPM，请重启 PHP-FPM 和 Nginx：
-
-```bash
-sudo systemctl restart php7.4-fpm
-sudo systemctl restart nginx
-```
-
-### 检查 PHP 是否工作
-
-您可以创建一个简单的 PHP 文件来验证 PHP 是否正常工作。在您的 Web 服务器的根目录（例如 `/var/www/html`）中创建一个名为 `index.php` 的文件，并添加以下内容：
-
-```php
-<?php
-phpinfo();
-?>
-```
-
-然后，在浏览器中访问 `http://your_server_ip/index.php`，您应该会看到一个显示 PHP 配置信息的页面。如果看到了这个页面，说明 PHP 已成功安装并配置。
-
-### PHP安装成功
+   您可以创建一个简单的 PHP 文件来验证 PHP 是否正常工作。在您的 Web 服务器的根目录（例如 `/var/www/html`）中创建一个名为 `index.php` 的文件，并添加以下内容：
+   
+   ```php
+   <?php
+   phpinfo();
+   ?>
+   ```
+   
+   然后，在浏览器中访问 `http://your_server_ip/index.php`，您应该会看到一个显示 PHP 配置信息的页面。如果看到了这个页面，说明 PHP 已成功安装并配置。
