@@ -217,13 +217,13 @@
    
    ### 常见问题
 
-      在 HTML 页面中引用 CSS 文件出现 404 错误，通常是因为服务器找不到该文件。在基于 Ubuntu、Apache、MySQL 和 ThinkPHP 5.1 的环境中，可以按以下步骤来解决这个问题：
+      #### 1.在 HTML 页面中引用 CSS 文件出现 404 错误，通常是因为服务器找不到该文件。在基于 Ubuntu、Apache、MySQL 和 ThinkPHP 5.1 的环境中，可以按以下步骤来解决这个问题：
    
-      #### 1. 检查文件路径
+      ##### 1.1 检查文件路径
       
       确保文件 `/static/css/GoogleFont.css` 实际存在于项目目录中。检查路径是否正确，文件名是否拼写错误。
       
-      #### 2. 检查项目目录结构
+      ##### 1.2 检查项目目录结构
       
       确保静态文件目录结构正确，并且 Apache 可以访问该目录。假设项目目录结构如下：
       
@@ -238,7 +238,7 @@
       
       在这种情况下， `DocumentRoot` 应该指向 `public` 目录。
       
-      #### 3. 检查 Apache 配置
+      ##### 1.3 检查 Apache 配置
       
       确保 Apache 配置中的 `DocumentRoot` 指向项目的 `public` 目录。编辑 Apache 配置文件（例如 `/etc/apache2/sites-available/000-default.conf`）：
       
@@ -258,7 +258,7 @@
       </VirtualHost>
       ```
       
-      #### 4. 启用 `mod_rewrite`
+      ##### 1.4 启用 `mod_rewrite`
       
       确保已启用 Apache 的 `mod_rewrite` 模块，并允许 `.htaccess` 文件生效：
       
@@ -281,7 +281,7 @@
       </IfModule>
       ```
       
-      #### 5. 检查权限
+      ##### 1.5 检查权限
       
       确保静态文件和目录对 Apache 用户具有读取权限。运行以下命令：
       
@@ -290,11 +290,11 @@
       sudo chmod -R 755 /path/to/your/project
       ```
       
-      #### 6. 清理浏览器缓存
+      ##### 1.6 清理浏览器缓存
       
       有时，浏览器可能会缓存旧的请求结果。尝试清理浏览器缓存，或者在新的隐私窗口中重新加载页面。
       
-      #### 7. 重启 Apache 服务器
+      ##### 1.7 重启 Apache 服务器
       
       在做了以上修改后，务必重启 Apache 服务器使更改生效：
       
@@ -302,7 +302,7 @@
       sudo systemctl restart apache2
       ```
       
-      #### 8. 查看 Apache 错误日志
+      ##### 1.8 查看 Apache 错误日志
       
       如果问题仍然存在，可以查看 Apache 错误日志，以获取更多详细信息：
       
@@ -311,3 +311,7 @@
       ```
       
       通过上述步骤，您应该能够解决在 HTML 页面中引用 CSS 文件出现 404 错误的问题。
+
+      #### 出现 SQLSTATE[HY000] [1698] Access denied for user 'root'@'localhost' 错误，表示ThinkPHP连接MySQL数据库时，使用root用户被拒绝访问。这个问题通常与MySQL用户权限配置有关。以下是解决该问题的步骤：
+
+      确认 `root` 用户在 `localhost` 主机上有权限，如果有并将plugin字段的值改为`mysql_native_password`(即使用mysql_native_password认证插件）。
