@@ -312,6 +312,7 @@
       
       通过上述步骤，您应该能够解决在 HTML 页面中引用 CSS 文件出现 404 错误的问题。
 
-      #### 出现 SQLSTATE[HY000] [1698] Access denied for user 'root'@'localhost' 错误，表示ThinkPHP连接MySQL数据库时，使用root用户被拒绝访问。这个问题通常与MySQL用户权限配置有关。以下是解决该问题的步骤：
+
+      #### 2.出现 SQLSTATE[HY000] [1698] Access denied for user 'root'@'localhost' 错误，表示ThinkPHP连接MySQL数据库时，使用root用户被拒绝访问。这个问题通常与MySQL用户权限配置有关。以下是解决该问题的步骤：
 
       确认 `root` 用户在 `localhost` 主机上有权限，如果有并将plugin字段的值改为`mysql_native_password`(即使用mysql_native_password认证插件）。
