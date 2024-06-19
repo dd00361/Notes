@@ -2,8 +2,6 @@
 
 #### 1.修改文件/etc/apache2/sites-available/000-default.conf(相当于本地wamp\bin\apache\apache2.4.18\conf\extra\httpd-vhosts.conf)，设置不同的ServerName、DocumentRoot 和 Directory 
 
-``
-
 ```
 <VirtualHost *:80>
    ServerAdmin webmaster1@localhost
