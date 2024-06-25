@@ -34,22 +34,30 @@ xdebug.start_with_request=yes
 ![image](https://github.com/dd00361/Notes/assets/154615217/7b6f7b8f-f2e0-45c7-be8e-a095974e06d1)
 
 
-# 3.使用xdebug进行断点调试：
+# 3.编辑vhost.conf文件，添加“FcgidIOTimeout 3600”，如图所示。
 
-点击phpstorm界面右上角的“开始侦听PHP调试连接”，如图：
+此行代码作用是定义了FastCGI进程在与Apache进行数据交换（读取请求或写入响应）时的最大等待时间，此处定义为3600秒，即1个小时。如果不添加此行代码，则调试时会发生短时间内自动断开调试的情况，原因是进程管理器中有个超时设置,超过时间就会终止掉php进程。
+
+![image](https://github.com/dd00361/Notes/assets/154615217/59ad3186-00d4-4266-a786-cb2e673b2a24)
+
+
+# 4.使用xdebug进行断点调试：
+
+按图1---图2---图3---图4---图5顺序进行业务调试：
+
+点击“开始侦听PHP调试连接”，如图1:
 ![image](https://github.com/dd00361/Notes/assets/154615217/370ccdbe-6e4f-4af3-883b-45af704b9138)
 
-进行业务调试：
-
-在图1中点击“保存”后，进行图2所示：
-
+进行业务处理，如图2：
 ![image](https://github.com/dd00361/Notes/assets/154615217/55b8bd8f-168b-4c44-bfe0-38d91c0c9902)
-图1
 
+点击“来自Xdebug的传入连接”页面中的“应用更改”，如图3：
+![image](https://github.com/dd00361/Notes/assets/154615217/85b68b9d-a929-418b-bf6d-45746d2aed38)
+
+可以在需要调试的php文件的相应代码行右键点击“运行到光标处”，使调试从光标处开始。如图4：
 ![image](https://github.com/dd00361/Notes/assets/154615217/cc01dc60-94a5-4cd6-afd7-d4cf0ce23e8f)
-图2
 
-可以点击下图中的按钮查看每一行代码的执行结果：
+可以点击下图中的“步过”按钮依序查看每一行代码的调试结果，如图5：
 ![image](https://github.com/dd00361/Notes/assets/154615217/45fff0fd-28e5-4ab5-b2a6-371ca76f6140)
 
 当调试完成后别忘记点击右上方的”停止“按钮并点击“关闭侦听PHP调试连接”。
