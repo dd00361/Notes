@@ -12,7 +12,7 @@
    sudo apt install apache2
    ```
 
-3. #### 启动 Apache：安装完成后，Apache 不会自动启动。您可以使用以下命令手动启动 Apache 服务：
+3. #### 启动 Apache：安装完成后，您可以使用以下命令手动启动 Apache 服务：
 
    ```bash
    sudo systemctl start apache2
@@ -45,7 +45,7 @@
    sudo ufw allow 'Apache'
    ```
 
-7. #### 测试 Apache：打开您的 Web 浏览器并访问 `http://localhost`。如果您看到 Apache2 默认页面，则表示 Apache 安装成功。
+7. #### 测试 Apache：打浏览器并访问访问ubuntu服务器地址。如果看到 Apache2 默认页面，则表示 Apache 安装成功。
 
 这样，您就成功安装并启动了 Apache 服务器。
 
@@ -149,12 +149,39 @@
    ```
 
 2. #### 安装 PHP
+这行指令在 Ubuntu 系统上安装 PHP 7.3 及其常用扩展。下面是每个部分的详细解释：
 
-   在 Ubuntu 中，您可以使用 `apt` 包管理器来安装 PHP。默认情况下，Ubuntu 软件库中包含 PHP 7.4，这是在 Ubuntu 20.04 中的默认版本。要安装 PHP 以及一些常见的 PHP 扩展，请运行以下命令：
-   
-   ```bash
-   sudo apt install php php-cli php-fpm php-json php-common php-mysql php-zip php-gd php-mbstring php-curl php-xml php-bcmath php-json
-   ```
+```bash
+sudo apt install php7.3 php7.3-cli php7.3-fpm php7.3-mysql php7.3-xml php7.3-mbstring php7.3-curl php7.3-zip php7.3-intl php7.3-json
+```
+
+#### 指令解释
+
+1. **`sudo`**：以超级用户权限运行命令。安装软件包需要管理员权限，因此需要使用 `sudo`。
+
+2. **`apt install`**：使用 APT 包管理器安装指定的软件包。
+
+3. **`php7.3`**：安装 PHP 7.3 的核心包，包含基本的 PHP 运行环境。
+
+4. **`php7.3-cli`**：安装 PHP 命令行接口（CLI），用于在命令行中运行 PHP 脚本。
+
+5. **`php7.3-fpm`**：安装 PHP FastCGI 进程管理器（FPM），用于与 Web 服务器（如 Nginx）集成，提供高性能的 PHP 环境。
+
+6. **`php7.3-mysql`**：安装 PHP 的 MySQL 扩展，用于与 MySQL 数据库交互。
+
+7. **`php7.3-xml`**：安装 PHP 的 XML 扩展，用于处理 XML 数据。
+
+8. **`php7.3-mbstring`**：安装 PHP 的多字节字符串扩展，用于处理多字节编码（如 UTF-8）字符串。
+
+9. **`php7.3-curl`**：安装 PHP 的 cURL 扩展，用于通过 URL 传输数据（如通过 HTTP 协议）。
+
+10. **`php7.3-zip`**：安装 PHP 的 ZIP 扩展，用于处理 ZIP 压缩文件。
+
+11. **`php7.3-intl`**：安装 PHP 的国际化（Internationalization）扩展，用于处理国际化字符和格式。
+
+12. **`php7.3-json`**：安装 PHP 的 JSON 扩展，用于处理 JSON 数据格式。
+
+这行命令通过安装 PHP 7.3 及其一系列常用扩展，为你的系统提供了一个完整的 PHP 开发环境。这些扩展涵盖了数据库连接、字符串处理、文件压缩、网络通信和国际化等多种功能，确保你能够开发和运行大多数 PHP 应用程序。
 
 3. #### 验证 PHP 安装
 
